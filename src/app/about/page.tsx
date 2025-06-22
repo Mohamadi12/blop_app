@@ -32,7 +32,7 @@ const page = () => {
               possible.
             </p>
             <p className="text-gray-600 dark:text-gray-300">
-              Chez <strong>NanaCode</strong>, nous croyons que l'innovation doit
+              Chez <strong>NanaCode</strong>, nous croyons que l&apos;innovation doit
               être accessible à tous. Nous nous engageons à partager du contenu
               de qualité, à inspirer les créateurs de demain et à rendre les
               connaissances techniques claires et motivantes.
