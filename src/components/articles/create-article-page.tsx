@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import dynamic from "next/dynamic";
 import { useState, useActionState, startTransition } from "react";
 import "react-quill-new/dist/quill.snow.css";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { createArticles } from "@/actions/create-article";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
@@ -87,8 +87,8 @@ const CreateArticlesPage = () => {
               )}
             </div>
             <div className="flex justify-end gap-4">
-              <Button variant={"outline"}>Cancel</Button>
-              <Button type="submit" disabled={isPending}>
+              <Button variant={"outline"} className="cursor-pointer">Cancel</Button>
+              <Button type="submit" disabled={isPending} className="cursor-pointer">
                 {isPending ? "Loading..." : "Publish Article"}
               </Button>
             </div>

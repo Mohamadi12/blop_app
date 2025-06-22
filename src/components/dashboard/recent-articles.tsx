@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,10 +10,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "../ui/badge";
 import Link from "next/link";
+import { Prisma } from "@prisma/client";
+import { useTransition } from "react";
+import { deleteArticle } from "@/actions/delete-article";
 
-const RecentArticles = () => {
+type RecentArticlesProps = {
+  articles: Prisma.ArticlesGetPayload<{
+    include: {
+      comments: true;
+      author: {
+        select: {
+          name: true;
+          email: true;
+          imageUrl: true;
+        };
+      };
+    };
+  }>[];
+};
+
+const RecentArticles: React.FC<RecentArticlesProps> = ({ articles }) => {
   return (
     <Card className="mb-8">
       <CardHeader>
@@ -23,52 +41,71 @@ const RecentArticles = () => {
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Comment</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>title</TableCell>
-              <TableCell>
-                <Badge className="rounded-full bg-green-100 text-green-800">
-                  Published
-                </Badge>
-              </TableCell>
-              <TableCell>2</TableCell>
-              <TableCell>12 feb</TableCell>
-              <TableCell>
-                <div>
-                  <Link href={`/dashboard/articles/${123}/edit`}>
-                    <Button variant={"ghost"} size={"sm"}>
-                      Edit
-                    </Button>
-                  </Link>
-                  <DeleteButton />
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </CardContent>
+      {!articles.length ? (
+        <CardContent>No articles found.</CardContent>
+      ) : (
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Comments</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {articles.slice(0, 5).map((article) => (
+                <TableRow key={article.id}>
+                  <TableCell className="font-medium">{article.title}</TableCell>
+                  <TableCell>
+                    <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800 cursor-pointer">
+                      Published
+                    </span>
+                  </TableCell>
+                  <TableCell>{article.comments.length}</TableCell>
+                  <TableCell>
+                    {new Date(article.createdAt).toDateString()}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Link href={`/dashboard/articles/${article.id}/edit`}>
+                        <Button variant="ghost" size="sm" className="cursor-pointer">
+                          Edit
+                        </Button>
+                      </Link>
+                      <DeleteButton articleId={article.id} />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      )}
     </Card>
   );
 };
 
 export default RecentArticles;
 
-const DeleteButton = () => {
+type DeleteButtonProps = {
+  articleId: string;
+};
+const DeleteButton: React.FC<DeleteButtonProps> = ({ articleId }) => {
+  const [isPending, startTransition] = useTransition()
+
   return (
-    <form>
-      <Button variant={"ghost"} size={"sm"} type="submit">
-        Delete
+    <form
+      action={() => {
+        startTransition(async () => {
+          await deleteArticle(articleId);
+        });
+      }}
+    >
+      <Button disabled={isPending} variant={"ghost"} size={"sm"} type="submit" className="cursor-pointer">
+        {isPending ? "Loading..." : "Delete"}
       </Button>
     </form>
   );
