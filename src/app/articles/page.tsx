@@ -31,7 +31,7 @@ const Page = async ({ searchParams }: PageProps) => {
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl cursor-pointer">
             All Articles
           </h1>
-          <Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
             <ArticleSearchInput />
           </Suspense>
         </div>
