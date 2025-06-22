@@ -6,8 +6,8 @@ import { Search, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { SignedOut, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { SignedIn, UserButton } from "@clerk/nextjs";
-import SearchInput from "./search-input";
 import { ToggleMode } from "./toggle-mode";
+import { SearchInput } from "./search-input";
 
 const Navbar = () => {
   const { user } = useUser();

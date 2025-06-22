@@ -1,10 +1,10 @@
-import ArticleSearchInput from "@/components/articles/article-search-input";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
 import { fetchArticleByQuery } from "@/lib/query/fetch-articles";
 import Link from "next/link";
 import { AllArticlesPage } from "@/components/articles/all-article-page";
 import AllArticlesPageSkeleton from "@/components/articles/all-articles-page-skeleton";
+import { ArticleSearchInput } from "@/components/articles/article-search-input";
 
 const ITEMS_PER_PAGE = 3; // Number of items per page
 
