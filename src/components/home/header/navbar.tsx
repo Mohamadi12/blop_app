@@ -1,18 +1,20 @@
 "use client";
-
-"use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { SignedOut, SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 import SearchInput from "./search-input";
 import { ToggleMode } from "./toggle-mode";
 
 const Navbar = () => {
+  const { user } = useUser();
+  const isAdmin =
+    user?.primaryEmailAddress?.emailAddress === "dalizeta368@gmail.com";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,16 +34,16 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-4">
               <Link
+                href="/"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Home
+              </Link>
+              <Link
                 href="/articles"
                 className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 Articles
-              </Link>
-              <Link
-                href="/tutorials"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Tutorials
               </Link>
               <Link
                 href="/about"
@@ -49,12 +51,14 @@ const Navbar = () => {
               >
                 About
               </Link>
-              <Link
-                href="/dashboard"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Dashboard
-              </Link>
+              {isAdmin && (
+                <Link
+                  href="/dashboard"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Dashboard
+                </Link>
+              )}
             </div>
           </div>
 
@@ -115,18 +119,18 @@ const Navbar = () => {
             {/* Mobile Navigation Links */}
             <div className="space-y-2 px-4">
               <Link
+                href="/"
+                className="block px-3 py-2 text-base font-medium text-foreground"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link
                 href="/articles"
                 className="block px-3 py-2 text-base font-medium text-foreground"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Articles
-              </Link>
-              <Link
-                href="/tutorials"
-                className="block px-3 py-2 text-base font-medium text-foreground"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Tutorials
               </Link>
               <Link
                 href="/about"
@@ -135,13 +139,15 @@ const Navbar = () => {
               >
                 About
               </Link>
-              <Link
-                href="/dashboard"
-                className="block px-3 py-2 text-base font-medium text-foreground"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
+              {isAdmin && (
+                <Link
+                  href="/dashboard"
+                  className="block px-3 py-2 text-base font-medium text-foreground"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              )}
             </div>
 
             {/* Mobile Auth Buttons */}

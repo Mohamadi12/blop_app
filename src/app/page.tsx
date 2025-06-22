@@ -1,4 +1,3 @@
-import BlogFooter from "@/components/home/blog-footer";
 import HeroSection from "@/components/home/hero-section";
 import TopArticles from "@/components/top-articles";
 import { Button } from "@/components/ui/button";
@@ -37,7 +36,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <BlogFooter />
     </main>
   );
 };
