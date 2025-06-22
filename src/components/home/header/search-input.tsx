@@ -4,9 +4,15 @@ import { searchAction } from "@/actions/search";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const SearchInput = () => {
-  const params = useSearchParams();
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    const params = useSearchParams();
+    setSearchValue(params.get("search") || "");
+  }, []);
 
   return (
     <form action={searchAction}>
@@ -15,7 +21,7 @@ const SearchInput = () => {
         <Input
           type="search"
           name="search"
-          defaultValue={params.get("search") || ""}
+          defaultValue={searchValue}
           placeholder="Search articles..."
           className="pl-10 w-48 focus-visible:ring-1"
         />

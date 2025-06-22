@@ -4,10 +4,15 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { searchAction } from "@/actions/search";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const ArticleSearchInput = () => {
-  const searchParams = useSearchParams();
-  const searchText = searchParams.get("search") || "";
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    const searchParams = useSearchParams();
+    setSearchText(searchParams.get("search") || "");
+  }, []);
 
   return (
     <form action={searchAction} className="mx-auto max-w-2xl">
