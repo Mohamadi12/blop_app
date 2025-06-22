@@ -24,11 +24,11 @@ const Home = () => {
             <TopArticles />
           </Suspense>
 
-          <div className="mt-12 text-center">
+          <div className="mt-12 text-center cursor-pointer">
             <Link href={"/articles"}>
               <Button
                 variant="outline"
-                className="rounded-full px-8 py-6 text-lg hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900"
+                className="cursor-pointer rounded-full px-8 py-6 text-lg hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-gray-900"
               >
                 View All Articles
               </Button>

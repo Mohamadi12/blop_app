@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -24,15 +25,16 @@ const HeroSection = () => {
           </p>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row md:justify-start">
-            <Button size="lg" className="rounded-full px-8 py-6 text-lg">
-              Start Reading
+            <Button size="lg" className="rounded-full px-8 py-6 text-lg" asChild>
+              <Link href="/articles">Start Reading</Link>
             </Button>
             <Button
               variant="outline"
               size="lg"
               className="rounded-full px-8 py-6 text-lg dark:text-white"
+              asChild
             >
-              Explore Topics
+              <Link href="/about">Explore Topics</Link>
             </Button>
           </div>
           {/* Stats */}

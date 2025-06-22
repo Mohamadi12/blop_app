@@ -77,10 +77,10 @@ const Navbar = () => {
             <SignedOut>
               <div className="hidden md:flex items-center gap-2">
                 <SignInButton>
-                  <Button variant="outline">Login</Button>
+                  <Button variant="outline" className="cursor-pointer">Login</Button>
                 </SignInButton>
                 <SignUpButton>
-                  <Button>Sign up</Button>
+                  <Button className="cursor-pointer">Sign up</Button>
                 </SignUpButton>
               </div>
             </SignedOut>

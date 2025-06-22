@@ -28,7 +28,7 @@ const Page = async ({ searchParams }: PageProps) => {
       <main className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 space-y-6 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl cursor-pointer">
             All Articles
           </h1>
           <Suspense>
